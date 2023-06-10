@@ -30,7 +30,7 @@ cd web
 node server.js
 ```
 3. Open static HTML document
-```http
+```
 http://localhost:3000
 ```
 
