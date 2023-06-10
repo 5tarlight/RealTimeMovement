@@ -1,2 +1,2 @@
 # RealTimeMovement
-HTTP base real time multiplayer
+WebSocket base real time multiplayer
