@@ -13,6 +13,7 @@ https://github.com/5tarlight/RealTimeMovement/assets/45203447/9d748927-566f-4788
 ## Specs
 - Spring Boot (Kotlin)
 - HTML + JS
+- Node.js (for HTML serving and CORS)
 - Browser innate WebSocket
 
 ## Can I Use WebSocket?
