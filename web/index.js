@@ -2,6 +2,7 @@ let socket;
 let obj = []
 let canvas
 let ctx
+let id
 
 const draw = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -12,6 +13,15 @@ const draw = () => {
     })
 
     requestAnimationFrame(draw)
+}
+
+const handleMove = (x, y) => {
+    socket.send(JSON.stringify({
+        event: 'move',
+        id,
+        x: obj.filter(o => o.id === id)[0].x + x,
+        y: obj.filter(o => o.id === id)[0].y + y
+    }))
 }
 
 const ready = () => {
@@ -45,18 +55,37 @@ const ready = () => {
                 //     ...obj.slice(index + 1)
                 // ]
                 break
+            case "self":
+                id = data.id
+                break
             default:
                 console.error("Unknown event :", data)
         }
-        console.dir(data)
-        console.dir(obj)
     }
 
-    socket.onopen = () => {
+    socket.onopen = (e) => {
         console.log("Connection established.")
     }
 
     requestAnimationFrame(draw)
+
+    document.querySelector('body')
+        .addEventListener('keydown', event => {
+            switch (event.key) {
+                case "ArrowUp":
+                    handleMove(0, -10)
+                    break
+                case "ArrowDown":
+                    handleMove(0, 10)
+                    break
+                case "ArrowLeft":
+                    handleMove(-10, 0)
+                    break
+                case "ArrowRight":
+                    handleMove(10, 0)
+                    break
+            }
+        })
 }
 
 window.onload = ready
