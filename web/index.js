@@ -1,9 +1,24 @@
 let socket;
 let obj = []
+let canvas
+let ctx
+
+const draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    obj.forEach(o => {
+        ctx.fillStyle = o.color
+        ctx.fillRect(o.x, o.y, 50, 50)
+    })
+
+    requestAnimationFrame(draw)
+}
 
 const ready = () => {
     console.log("Establishing WebSocket...")
     socket = new WebSocket("ws://localhost:8080/")
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d")
 
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data)
@@ -41,6 +56,7 @@ const ready = () => {
         console.log("Connection established.")
     }
 
+    requestAnimationFrame(draw)
 }
 
 window.onload = ready
